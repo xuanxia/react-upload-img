@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "oss 服务器端签名 React直传组件 ",
   "main": "index.js",
-  "scripts": {
-    "dev": "webpack-dev-server --config ./config/webpack.dev.config.babel.js --progress --profile --colors"
-  },
   "repository": {
     "type": "git",
     "url": "ssh://git@47.98.231.119:10022/xiaojian/ReactUpload.git"
@@ -67,5 +64,12 @@
     "image"
   ],
   "author": "xiaojian",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack-dev-server --config ./config/webpack.dev.config.babel.js --progress --profile --colors",
+    "dist": "npm run dist-demo && npm run dist-lib-prod && npm run dist-lib-dev ",
+    "dist-demo": "webpack --config ./config/webpack.prod.config.babel.js --progress --profile --colors",
+    "dist-lib-dev": "webpack --config ./config/webpack.lib.dev.config.babel.js --progress --profile --colors --watch",
+    "dist-lib-prod": "webpack --config ./config/webpack.lib.prod.config.babel.js --progress --profile --colors"
+  }
 }
