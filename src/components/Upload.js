@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Upload, Icon, message, Modal } from 'antd';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import './style.less';
 
 const ossHost = 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com';
 
@@ -474,22 +473,27 @@ class PictureUploader extends Component {
             footer: null,
             onCancel: this.handlePreviewClose.bind(this),
         };
+
+        const iconStyle = {
+            fontSize:30,
+        };
+
         return [
             <Upload key="uploader" {...uploadProps}>
                 {fileList.length >= this.totalNum ? null : this.uploadButton()}
             </Upload>,
 
             <Modal key="modal" {...modalConfig}>
-                <div className="pre-next-wrapper">
+                <div style={{marginTop:-20,padding:'10px 0'}}>
                     {needPre ? (
-                        <Icon onClick={this.showPreImage.bind(this, currentIndex)} type="arrow-left" />
+                        <Icon style={{float:'left',color:'#40a9ff',...iconStyle}} onClick={this.showPreImage.bind(this, currentIndex)} type="arrow-left" />
                     ) : (
-                        <Icon style={{ color: '#CDCDCD', cursor: 'default' }} type="arrow-left" />
+                        <Icon style={{ float:'left',color: '#CDCDCD', cursor: 'default',...iconStyle }} type="arrow-left" />
                     )}
                     {needNext ? (
-                        <Icon onClick={this.showNextImage.bind(this, currentIndex)} type="arrow-right" />
+                        <Icon style={{float:'right',color:'#40a9ff',...iconStyle}} onClick={this.showNextImage.bind(this, currentIndex)} type="arrow-right" />
                     ) : (
-                        <Icon style={{ color: '#CDCDCD', cursor: 'default' }} type="arrow-right" />
+                        <Icon style={{float:'right', color: '#CDCDCD', cursor: 'default',...iconStyle }} type="arrow-right" />
                     )}
                 </div>
                 <img width="100%" src={previewImage} alt="" />
