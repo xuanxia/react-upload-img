@@ -122,7 +122,9 @@ function styleProcessor(type = 'css', options = { modules: false }) {
             localIdentName: '[local]__[hash:base64:5]',
         } : {}
     };
-    const lessLoader = { loader: 'less-loader' }
+    const lessLoader = { loader: 'less-loader', options: {
+            javascriptEnabled: true
+        }};
     const postcssLoader =  {
         loader: 'postcss-loader',
         options: {

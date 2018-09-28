@@ -9,7 +9,6 @@ export default  class Demo extends Component{
         };
 
         return <div>
-            demo111
             <ReactUpload {...uploadConfig}/>
         </div>
     }

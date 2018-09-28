@@ -8,8 +8,10 @@
     "url": "ssh://git@47.98.231.119:10022/xiaojian/ReactUpload.git"
   },
   "dependencies": {
+    "antd": "^3.9.3",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
+    "react-beautiful-dnd": "^9.0.2",
     "react-dom": "^16.4.2"
   },
   "devDependencies": {
@@ -39,7 +41,7 @@
     "eslint-plugin-react": "^7.10.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.30.1",
-    "less": "^3.0.4",
+    "less": "^2.7.3",
     "less-loader": "^4.1.0",
     "open-browser-webpack-plugin": "0.0.5",
     "postcss-loader": "^2.1.5",
