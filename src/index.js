@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 export default class ReactUpload extends PureComponent{
 
     static defaultProps = {
-        type: 'oss'
+        type: 'oss',
     };
 
     constructor(props){
@@ -19,14 +19,26 @@ export default class ReactUpload extends PureComponent{
 
     render(){
 
-        const { type } = this.props;
+        const {
+            type,
+            maxSize,
+            totalNum,
+            supportSort,
+            imageUploadServerHost,
+            imageShowServiceHost,
+            extraParam,
+            getSign
+        } = this.props;
 
         return  <Upload
-            bizName="avatar"
-            maxSize={1024 * 2}
-            totalNum={9}
-            supportSort={true}
-            host={`https://hp.bncry.cn/util/getAliyunSignature`}
+            type={type}
+            maxSize={maxSize}
+            totalNum={totalNum}
+            supportSort={supportSort}
+            getSign={getSign}
+            extraParam={extraParam}
+            imageUploadServerHost={imageUploadServerHost}
+            imageShowServiceHost={imageShowServiceHost}
             onChange={value => {
                 console.log(value)
             }}

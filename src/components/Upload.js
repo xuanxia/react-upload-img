@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Upload, Icon, message, Modal } from 'antd';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-const ossHost = 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -41,12 +40,14 @@ class PictureUploader extends Component {
         supportSort: false,
         maxSize: 2048,
         bizName: 'avatar',
+        imageShowServiceHost: '',
+        getSign: () => {},
     };
 
     constructor(props) {
         super(props);
 
-        const { value, totalNum = 1 } = props;
+        const { imageShowServiceHost, value, } = props;
         const values = value ? value.split(';') : [];
         const defaultFileList = [];
         const initValue = [];
@@ -58,8 +59,8 @@ class PictureUploader extends Component {
                     uid: index,
                     name: item,
                     status: 'done',
-                    thumbUrl: `${ossHost}/${item}`,
-                    url: `${ossHost}/${item}`,
+                    thumbUrl: `${imageShowServiceHost}/${item}`,
+                    url: `${imageShowServiceHost}/${item}`,
                 });
 
                 initValue.push(item);
@@ -70,15 +71,13 @@ class PictureUploader extends Component {
         this.state = {
             fileList: defaultFileList,
             loading: false,
-            ossOption: {},
+            formData: {},
             preview: false,
             previewImage: null,
             needPre: true,
             needNext: true,
             currentIndex: 0,
         };
-        this.serverUrl = props.host
-        this.totalNum = totalNum;
 
         this.onDragEnd = this.onDragEnd.bind(this);
     }
@@ -139,64 +138,35 @@ class PictureUploader extends Component {
         onChange(result.join(';'));
     }
 
-    // 从服务器获取签名
-    getSign(bizName, suffix, width, height) {
-        const { serverUrl } = this;
-
-        const url = `${serverUrl}?${[
-            `bizName=${bizName}`,
-            `suffix=${suffix}`,
-            `width=${width}`,
-            `height=${height}`,
-        ].join('&')}`;
-
-        try {
-            const data = this.getRequestData(url);
-
-            if (data.code === 200) {
-                return data.data;
-            } else {
-                message.error('上传图片失败 请联系管理员');
-                return false;
-            }
-        } catch (err) {
-            message.error('上传图片失败 请联系管理员');
-            return false;
-        }
-    }
-
-    // 发情原生HTTP请求
-    getRequestData = url => {
-        let xmlhttp = null;
-        if (window.XMLHttpRequest) {
-            xmlhttp = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            xmlhttp = new window.ActiveXObject('Microsoft.XMLHTTP');
-        }
-
-        if (xmlhttp != null) {
-            xmlhttp.open('GET', url, false);
-            xmlhttp.send(null);
-
-            return JSON.parse(xmlhttp.responseText);
-        } else {
-            alert('Your browser does not support XMLHTTP.');
-        }
-    };
-
     /**
      * 获取服务器上传签名
      */
     getData = () => {
-        const { ossOption } = this.state;
-        return {
-            key: ossOption.dirPath,
-            policy: ossOption.policy,
-            OSSAccessKeyId: ossOption.OSSAccessKeyId,
-            success_action_status: '200',
-            callback: ossOption.callback,
-            signature: ossOption.signature,
-        };
+        const { type } = this.props;
+        const { formData } = this.state;
+        if(type === 'oss'){
+            return {
+                key: formData.dirPath,
+                policy: formData.policy,
+                OSSAccessKeyId: formData.OSSAccessKeyId,
+                success_action_status: '200',
+                callback: formData.callback,
+                signature: formData.signature,
+            };
+        }
+        if(type === 'qiniu'){
+
+            let result = {
+                token: formData.uptoken,
+               // fileName: formData.fileName ? formData.fileName : 'fileName'
+            };
+
+
+            console.log(result);
+
+            return result
+        }
+
     };
 
     getPreNextInfo(fileName) {
@@ -291,9 +261,9 @@ class PictureUploader extends Component {
      * @param {} file
      * @param {*} fileList
      */
-    beforeUpload = (file, fileList) => {
+     beforeUpload = (file, fileList) => {
         const { state } = this;
-        const { maxSize, bizName } = this.props || {};
+        const { maxSize, getSign, extraParam, totalNum } = this.props || {};
         const defaultMaxSize = 2048; // 默认最大文件大
         const suffixMap = {
             'image/jpg': 'jpg',
@@ -305,9 +275,9 @@ class PictureUploader extends Component {
         };
 
         return new Promise((resolve, reject) => {
-            if (state.fileList.length + fileList.length > this.totalNum) {
+            if (state.fileList.length + fileList.length > totalNum) {
                 message.warn(
-                    `最多上传${this.totalNum}张图片 还能上传${this.totalNum - state.fileList.length}张`
+                    `最多上传${totalNum}张图片 还能上传${totalNum - state.fileList.length}张`
                 );
                 reject();
                 return false;
@@ -328,16 +298,21 @@ class PictureUploader extends Component {
             const imgBlobUrl = URL.createObjectURL(file);
 
             const img = document.createElement('img');
-            img.onload = () => {
-                const signData = this.getSign(bizName, suffixMap[file.type], img.width, img.height);
+
+            img.onload = async () => {
+
+                const signData = await getSign(suffixMap[file.type], img.width, img.height,extraParam);
 
                 if (!signData) {
                     reject();
                     return false;
                 }
 
-                this.setState({ ossOption: signData }, resolve);
+                signData.fileName = file.name;
+
+                this.setState({ formData: signData }, resolve);
             };
+
             img.src = imgBlobUrl;
         });
     };
@@ -454,9 +429,9 @@ class PictureUploader extends Component {
 
     render() {
         const { previewImage, fileList, currentIndex, needPre, needNext, preview } = this.state;
-        const { supportSort, listType } = this.props;
+        const { supportSort, listType, totalNum, imageUploadServerHost } = this.props;
         const uploadProps = {
-            action: ossHost,
+            action: imageUploadServerHost,
             data: this.getData,
             beforeUpload: this.beforeUpload.bind(this),
             onChange: this.handleChange.bind(this),
@@ -464,7 +439,7 @@ class PictureUploader extends Component {
             fileList,
             listType: listType || 'picture-card',
             onPreview: this.handlePreview.bind(this),
-            multiple: !!(this.totalNum > 1),
+            multiple: (totalNum > 1),
             className: 'd-ib',
         };
         const modalConfig = {
@@ -480,7 +455,7 @@ class PictureUploader extends Component {
 
         return [
             <Upload key="uploader" {...uploadProps}>
-                {fileList.length >= this.totalNum ? null : this.uploadButton()}
+                {fileList.length >= totalNum ? null : this.uploadButton()}
             </Upload>,
 
             <Modal key="modal" {...modalConfig}>
