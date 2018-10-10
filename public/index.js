@@ -5,8 +5,6 @@ import ReactUpload from '@/index';
 const apiServerUrl = 'https://hp.bncry.cn/util/getAliyunSignature';
 const qiniuApiServerUrl = 'https://hp.bncry.cn/util/getQiniuSignature';
 
-
-
 const getOSSSign = (suffix,width,height, extraParam) => {
 
     const url = `${apiServerUrl}?${[
@@ -19,7 +17,15 @@ const getOSSSign = (suffix,width,height, extraParam) => {
     return new Promise((resolve,reject)=>{
         fetch(url).then(async (response)=>{
             const res = await response.json();
-            resolve(res.data);
+            const formData = res.data;
+            resolve({
+                key: formData.dirPath,
+                policy: formData.policy,
+                OSSAccessKeyId: formData.OSSAccessKeyId,
+                success_action_status: '200',
+                callback: formData.callback,
+                signature: formData.signature,
+            });
         })
     })
 };
@@ -35,7 +41,10 @@ const getQiNiuSign = (suffix,width,height, extraParam) => {
 
     return new Promise((resolve,reject)=>{
         fetch(url).then(async (response)=>{
-            resolve(await response.json());
+            const formData = await response.json();
+            resolve({
+                token: formData.uptoken,
+            });
         })
     })
 };
@@ -49,7 +58,9 @@ export default  class Demo extends Component{
             type:'oss',
             imageUploadServerHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', //图片上传服务地址
             imageShowServiceHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', // 图片查看地址前缀
-            totalNum: 5
+            totalNum: 5,
+            supportSort: true,
+            value:'avatar/2018-10-10/f2b3ace0-cc33-11e8-8ad4-3550e70cc242_220_138.jpg;avatar/2018-10-10/f2b42210-cc33-11e8-8ad4-3550e70cc242_1080_1920.jpg;avatar/2018-10-10/f2b44920-cc33-11e8-8ad4-3550e70cc242_1280_719.jpg'
         };
 
         const qiniuUploadConfig = {

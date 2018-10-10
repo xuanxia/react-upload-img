@@ -39,8 +39,8 @@ class PictureUploader extends Component {
         onChange: () => {},
         supportSort: false,
         maxSize: 2048,
-        bizName: 'avatar',
         imageShowServiceHost: '',
+        imageUploadServerHost: '',
         getSign: () => {},
     };
 
@@ -139,34 +139,11 @@ class PictureUploader extends Component {
     }
 
     /**
-     * 获取服务器上传签名
+     * 获取formData 数据
      */
     getData = () => {
-        const { type } = this.props;
         const { formData } = this.state;
-        if(type === 'oss'){
-            return {
-                key: formData.dirPath,
-                policy: formData.policy,
-                OSSAccessKeyId: formData.OSSAccessKeyId,
-                success_action_status: '200',
-                callback: formData.callback,
-                signature: formData.signature,
-            };
-        }
-        if(type === 'qiniu'){
-
-            let result = {
-                token: formData.uptoken,
-               // fileName: formData.fileName ? formData.fileName : 'fileName'
-            };
-
-
-            console.log(result);
-
-            return result
-        }
-
+        return formData
     };
 
     getPreNextInfo(fileName) {
@@ -389,6 +366,7 @@ class PictureUploader extends Component {
 
     // 上传动作的回调
     handleChange(info) {
+        const { type } = this.props;
         const { file, fileList } = info;
 
         this.setState({
@@ -401,17 +379,34 @@ class PictureUploader extends Component {
         }
 
         if (file.status === 'done') {
-            const responseData = file.response.data;
+
             let flag = true;
-            fileList.map((item, index) => {
-                if (item.name === file.name) {
-                    fileList[index].name = responseData.key;
-                }
-                if (item.status !== 'done') {
-                    flag = false;
-                }
-                return null;
-            });
+
+            if(type === 'oss' ){
+                const responseData = file.response.data;
+                fileList.map((item, index) => {
+                    if (item.name === file.name) {
+                        fileList[index].name = responseData.key;
+                    }
+                    if (item.status !== 'done') {
+                        flag = false;
+                    }
+                    return null;
+                });
+            }
+
+            if(type === 'qiniu'){
+                const responseData = file.response;
+                fileList.map((item, index) => {
+                    if (item.name === file.name) {
+                        fileList[index].name = responseData.key;
+                    }
+                    if (item.status !== 'done') {
+                        flag = false;
+                    }
+                    return null;
+                });
+            }
 
             this.setState(
                 {
@@ -433,12 +428,12 @@ class PictureUploader extends Component {
         const uploadProps = {
             action: imageUploadServerHost,
             data: this.getData,
-            beforeUpload: this.beforeUpload.bind(this),
-            onChange: this.handleChange.bind(this),
-            onRemove: this.handleRemove.bind(this),
+            beforeUpload: this.beforeUpload,
+            onChange: this.handleChange,
+            onRemove: this.handleRemove,
             fileList,
             listType: listType || 'picture-card',
-            onPreview: this.handlePreview.bind(this),
+            onPreview: this.handlePreview,
             multiple: (totalNum > 1),
             className: 'd-ib',
         };
@@ -446,7 +441,7 @@ class PictureUploader extends Component {
             visible: preview,
             title: `图片预览${fileList.length}/${currentIndex + 1}`,
             footer: null,
-            onCancel: this.handlePreviewClose.bind(this),
+            onCancel: this.handlePreviewClose,
         };
 
         const iconStyle = {
