@@ -2,11 +2,11 @@
 import React, {Component} from 'react';
 import ReactUpload from '@/index';
 
-const apiServerUrl = 'https://hp.bncry.cn/util/getAliyunSignature';
-const qiniuApiServerUrl = 'https://hp.bncry.cn/util/getQiniuSignature';
+
+
 
 const getOSSSign = (suffix,width,height, extraParam) => {
-
+    const apiServerUrl = 'https://hp.bncry.cn/util/getAliyunSignature';
     const url = `${apiServerUrl}?${[
         `bizName=${extraParam.bizName}`,
         `suffix=${suffix}`,
@@ -32,7 +32,7 @@ const getOSSSign = (suffix,width,height, extraParam) => {
 
 
 const getQiNiuSign = (suffix,width,height, extraParam) => {
-
+    const qiniuApiServerUrl = 'https://hp.bncry.cn/util/getQiniuSignature';
     const url = `${qiniuApiServerUrl}?${[
         `suffix=${suffix}`,
         `width=${width}`,

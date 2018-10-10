@@ -424,7 +424,7 @@ class PictureUploader extends Component {
 
     render() {
         const { previewImage, fileList, currentIndex, needPre, needNext, preview } = this.state;
-        const { supportSort, listType, totalNum, imageUploadServerHost } = this.props;
+        const { supportSort, totalNum, imageUploadServerHost } = this.props;
         const uploadProps = {
             action: imageUploadServerHost,
             data: this.getData,
@@ -432,7 +432,7 @@ class PictureUploader extends Component {
             onChange: this.handleChange,
             onRemove: this.handleRemove,
             fileList,
-            listType: listType || 'picture-card',
+            listType: 'picture-card',
             onPreview: this.handlePreview,
             multiple: (totalNum > 1),
             className: 'd-ib',

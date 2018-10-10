@@ -1,7 +1,7 @@
 {
-  "name": "react-upload",
+  "name": "react-uplod-img",
   "version": "1.0.0",
-  "description": "oss 服务器端签名 React直传组件 ",
+  "description": "React 图片直传组件 支持oss qiniu等 服务器端签名",
   "main": "index.js",
   "repository": {
     "type": "git",
