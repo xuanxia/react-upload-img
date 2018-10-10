@@ -20,6 +20,5 @@ yarn-error.log*
 
 .idea/
 
-lib
 /public/bundle.js
 
