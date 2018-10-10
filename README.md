@@ -54,7 +54,7 @@ const ossUploadConfig = {
             value:'avatar/2018-10-10/f2b3ace0-cc33-11e8-8ad4-3550e70cc242_220_138.jpg;avatar/2018-10-10/f2b42210-cc33-11e8-8ad4-3550e70cc242_1080_1920.jpg;avatar/2018-10-10/f2b44920-cc33-11e8-8ad4-3550e70cc242_1280_719.jpg'
         };
 
-<ReactUpload getSign={getOSSSign}  {...ossUploadConfig} extraParam={{bizName:"avatar"}}/>
+<UpImage getSign={getOSSSign}  {...ossUploadConfig} extraParam={{bizName:"avatar"}}/>
 
 ```
 
@@ -70,7 +70,7 @@ const ossUploadConfig = {
 | **`extraParam`** | `Object` |  |  获取签名getSign方法 的第四个参数 供获取签名时 自定义入参 |
 | **`getSign`** | `Func` | （）=>{} |  获取签名的方法  Promise |
 | **`onChange`** | `Func` | （）=>{} |  图片上传成功时的回调 参数为图片的半路径;分隔的一个字符串   |
-| **`value`** | `String` |  |  回显图片的路径 半路径 |
+| **`value`** | `String` |  |  回显图片的路径 半路径 ;分隔|
 
 
 ### `getSign`
