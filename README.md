@@ -68,7 +68,7 @@ const ossUploadConfig = {
 | **`imageUploadServerHost`** | `String` |  | 图片上传服务地址前缀 |
 | **`imageShowServiceHost`** | `String` |  | 图片查看服务地址前缀 |
 | **`maxSize`** | `Number` | 2048 |  图片大小限制 单位KB |
-| **`totalNum`** | `Number` | 1 |  图片大小限制 单位KB |
+| **`totalNum`** | `Number` | 1 |  图片数量限制 |
 | **`supportSort`** | `Bool` | false |  是否支持拖拽排序 |
 | **`extraParam`** | `Object` |  |  获取签名getSign方法 的第四个参数 供获取签名时 自定义入参 |
 | **`getSign`** | `Func` | （(suffix,width,height, extraParam）=>{} |  获取签名的方法  Promise |
