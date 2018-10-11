@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Upload, Icon, message, Modal } from 'antd';
+import Upload from 'antd/lib/upload';
+import 'antd/lib/upload/style/css';
+import Icon from 'antd/lib/icon';
+import 'antd/lib/icon/style/css';
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/css';
+import Modal from 'antd/lib/modal';
+import 'antd/lib/modal/style/css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 

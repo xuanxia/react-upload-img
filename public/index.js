@@ -3,8 +3,6 @@ import React, {Component} from 'react';
 import ReactUpload from '@/index';
 
 
-
-
 const getOSSSign = (suffix,width,height, extraParam) => {
     const apiServerUrl = 'https://hp.bncry.cn/util/getAliyunSignature';
     const url = `${apiServerUrl}?${[

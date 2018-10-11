@@ -3,7 +3,7 @@
  **/
 
 // React Libs
-import React, { Fragment,  PureComponent} from 'react'
+import React, {PureComponent} from 'react'
 import Upload from './components/Upload';
 import PropTypes from 'prop-types'
 
@@ -28,7 +28,8 @@ export default class ReactUpload extends PureComponent{
             imageShowServiceHost,
             extraParam,
             getSign,
-            value
+            value,
+            onChange
         } = this.props;
 
         return  <Upload
@@ -41,9 +42,7 @@ export default class ReactUpload extends PureComponent{
             extraParam={extraParam}
             imageUploadServerHost={imageUploadServerHost}
             imageShowServiceHost={imageShowServiceHost}
-            onChange={value => {
-                console.log(value)
-            }}
+            onChange={onChange}
         />
     }
 }
