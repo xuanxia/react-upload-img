@@ -56,9 +56,19 @@ export default  class Demo extends Component{
             type:'oss',
             imageUploadServerHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', //图片上传服务地址
             imageShowServiceHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', // 图片查看地址前缀
+            totalNum: 1,
+            onChange: (value)=>{
+                console.log(value);
+            }
+        };
+
+        const ossUploadConfig1 = {
+            type:'oss',
+            imageUploadServerHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', //图片上传服务地址
+            imageShowServiceHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', // 图片查看地址前缀
             totalNum: 5,
             supportSort: true,
-            value:'avatar/2018-10-10/f2b3ace0-cc33-11e8-8ad4-3550e70cc242_220_138.jpg;avatar/2018-10-10/f2b42210-cc33-11e8-8ad4-3550e70cc242_1080_1920.jpg;avatar/2018-10-10/f2b44920-cc33-11e8-8ad4-3550e70cc242_1280_719.jpg'
+            value:'avatar/2018-10-10/32c99430-cc33-11e8-8ad4-3550e70cc242_220_138.jpg;avatar/2018-10-10/f2b44920-cc33-11e8-8ad4-3550e70cc242_1280_719.jpg'
         };
 
         const qiniuUploadConfig = {
@@ -68,9 +78,25 @@ export default  class Demo extends Component{
             totalNum: 3
         };
 
-        return <div>
-            <ReactUpload getSign={getOSSSign}  {...ossUploadConfig} extraParam={{bizName:"avatar"}}/>
-            <ReactUpload getSign={getQiNiuSign}  {...qiniuUploadConfig} extraParam={{bizName:"avatar"}}/>
+        return <div style={{padding:20}}>
+            <div className='h-150'>
+                <p>OSS 单张</p>
+                <ReactUpload getSign={getOSSSign}  {...ossUploadConfig} extraParam={{bizName:"test"}}/>
+            </div>
+
+            <div className='h-250'>
+                <p>OSS 5张 带回显数据 支持排序</p>
+                <ReactUpload getSign={getOSSSign}  {...ossUploadConfig1} extraParam={{bizName:"test"}}/>
+            </div>
+
+            <div className='h-150' style={{marginTop:30}}>
+                <p>七牛云 3张 不支持排序</p>
+                <ReactUpload getSign={getQiNiuSign}  {...qiniuUploadConfig} extraParam={{bizName:"test"}}/>
+            </div>
+
+            <p>
+                更多信息 请参考 <a href="https://github.com/xuanxia/react-upload-img">https://github.com/xuanxia/react-upload-img</a>
+            </p>
         </div>
     }
 }

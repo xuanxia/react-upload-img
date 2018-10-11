@@ -1,11 +1,11 @@
 {
   "name": "react-uplod-img",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "React 图片直传组件 支持oss qiniu等 服务器端签名",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "ssh://git@47.98.231.119:10022/xiaojian/ReactUpload.git"
+    "url": "git@github.com:xuanxia/react-upload-img.git"
   },
   "dependencies": {
     "antd": "^3.9.3",
