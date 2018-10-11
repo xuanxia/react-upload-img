@@ -1,6 +1,7 @@
 
 
-> react-uplod-img 是一个基于 React antd组件的图片上传组件 支持oss qiniu等服务端签名 web直传
+> react-uplod-img 是一个基于 React antd组件的图片上传组件 支持oss qiniu等服务端自定义获取签名,批量上传, 预览, 删除, 排序等功能
+
 
 **需要 react 版本大于 v16.1.0 支持async await**
 
