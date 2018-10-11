@@ -71,7 +71,7 @@ const ossUploadConfig = {
 | **`totalNum`** | `Number` | 1 |  图片数量限制 |
 | **`supportSort`** | `Bool` | false |  是否支持拖拽排序 |
 | **`extraParam`** | `Object` |  |  获取签名getSign方法 的第四个参数 供获取签名时 自定义入参 |
-| **`getSign`** | `Func` | （(suffix,width,height, extraParam）=>{} |  获取签名的方法  Promise |
+| **`getSign`** | `Func` | (suffix,width,height, extraPara)=>{} |  获取签名的方法  Promise |
 | **`onChange`** | `Func` | （values）=>{} |  图片上传成功时的回调 参数为图片的半路径;分隔的一个字符串   |
 | **`value`** | `String` |  |  回显图片的路径 半路径 ;分隔|
 
