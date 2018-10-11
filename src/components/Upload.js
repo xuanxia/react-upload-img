@@ -108,7 +108,7 @@ class PictureUploader extends Component {
         });
     }
 
-    onDragEnd(result) {
+    onDragEnd = (result) => {
         const { fileList } = this.state;
 
         // dropped outside the list
@@ -129,7 +129,7 @@ class PictureUploader extends Component {
     }
 
     // 获取批量图片路径 用;分隔
-    getImages(deleteFileName) {
+    getImages = (deleteFileName) => {
         const { onChange } = this.props;
         const { fileList } = this.state;
         let result = [];
@@ -153,7 +153,7 @@ class PictureUploader extends Component {
         return formData
     };
 
-    getPreNextInfo(fileName) {
+    getPreNextInfo = (fileName) => {
         const { fileList } = this.state;
         let currentIndex = 0;
         let needPre = true;
@@ -180,7 +180,7 @@ class PictureUploader extends Component {
     }
 
     // 移除图片的回调
-    handleRemove = file => {
+    handleRemove = file =>  {
         let deleteFileName = '';
         if (file && file.response) {
             deleteFileName = file.response.data;
@@ -345,7 +345,7 @@ class PictureUploader extends Component {
      * 查看上一张图
      */
 
-    showPreImage(index) {
+    showPreImage = (index) => {
         const { fileList } = this.state;
         const nextIndex = index - 1;
         const file = fileList[nextIndex];
@@ -361,7 +361,7 @@ class PictureUploader extends Component {
     /**
      * 获取上传按钮
      */
-    uploadButton() {
+    uploadButton = () => {
         const { loading } = this.state;
         return (
             <div className="d-ib">
@@ -372,7 +372,7 @@ class PictureUploader extends Component {
     }
 
     // 上传动作的回调
-    handleChange(info) {
+    handleChange = (info) =>{
         const { type } = this.props;
         const { file, fileList } = info;
 
