@@ -1,6 +1,6 @@
 
 
-> react-uplod-img 是一个基于 React antd组件的图片上传组件 支持oss qiniu等服务端自定义获取签名,批量上传, 预览, 删除, 排序等功能
+> react-uplod-img 是一个基于 React antd组件的图片上传组件 支持oss qiniu等服务端自定义获取签名,批量上传, 预览, 删除, 图片精确的尺寸限制 排序等功能
 
 
 **需要 react 版本大于 v16.1.0 支持async await**
@@ -70,6 +70,10 @@ const ossUploadConfig = {
 | **`imageShowServiceHost`** | `String` |  | 图片查看服务地址前缀 |
 | **`maxSize`** | `Number` | 2048 |  图片大小限制 单位KB |
 | **`totalNum`** | `Number` | 1 |  图片数量限制 |
+| **`minWidth`** | `Number` |  |  图片最小宽度限制 |
+| **`maxWidth`** | `Number` |  |  图片最大宽度限制 |
+| **`minHeight`** | `Number` |  |  图片最小高度限制 |
+| **`maxHeight`** | `Number` |  |  图片最大高度限制 |
 | **`supportSort`** | `Bool` | false |  是否支持拖拽排序 |
 | **`extraParam`** | `Object` |  |  获取签名getSign方法 的第四个参数 供获取签名时 自定义入参 |
 | **`getSign`** | `Func` | (suffix,width,height, extraPara)=>{} |  获取签名的方法  Promise |
