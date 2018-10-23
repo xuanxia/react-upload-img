@@ -247,7 +247,7 @@ class PictureUploader extends Component {
      */
      beforeUpload = (file, fileList) => {
         const { state } = this;
-        const { maxSize, getSign, extraParam, totalNum } = this.props || {};
+        const { maxSize, getSign, extraParam, totalNum, minWidth, maxWidth, minHeight, maxHeight } = this.props || {};
         const defaultMaxSize = 2048; // 默认最大文件大
         const suffixMap = {
             'image/jpg': 'jpg',
@@ -284,8 +284,41 @@ class PictureUploader extends Component {
             const img = document.createElement('img');
 
             img.onload = async () => {
+                const {width, height} = img;
+                const showError = ()=>{
+                    message.error(`您上传的图片尺寸(${width} * ${height}) 与要求不符 请重新上传`);
+                    reject();
+                };
 
-                const signData = await getSign(suffixMap[file.type], img.width, img.height,extraParam);
+                if(minWidth){
+                    if(width < minWidth){
+                        showError();
+                        return false
+                    }
+                }
+
+                if(maxWidth){
+                    if(width > maxWidth){
+                        showError();
+                        return false
+                    }
+                }
+
+                if(minHeight){
+                    if(height < minHeight){
+                        showError();
+                        return false
+                    }
+                }
+
+                if(maxHeight){
+                    if(height > maxHeight){
+                        showError();
+                        return false
+                    }
+                }
+
+                const signData = await getSign(suffixMap[file.type], width, height,extraParam);
 
                 if (!signData) {
                     reject();
