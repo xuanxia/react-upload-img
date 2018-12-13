@@ -68,7 +68,7 @@ export default  class Demo extends Component{
             imageShowServiceHost: 'https://hp-file-lf.oss-cn-hangzhou.aliyuncs.com', // 图片查看地址前缀
             totalNum: 5,
             supportSort: true,
-            value:'avatar/2018-10-10/32c99430-cc33-11e8-8ad4-3550e70cc242_220_138.jpg;avatar/2018-10-10/f2b44920-cc33-11e8-8ad4-3550e70cc242_1280_719.jpg'
+            value:'test/1.jpg;test/2.jpg'
         };
 
         const qiniuUploadConfig = {

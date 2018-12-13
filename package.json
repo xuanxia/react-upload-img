@@ -8,7 +8,7 @@
     "url": "git@github.com:xuanxia/react-upload-img.git"
   },
   "dependencies": {
-    "antd": "^3.9.3",
+    "antd": "3.8.4",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-beautiful-dnd": "^9.0.2",

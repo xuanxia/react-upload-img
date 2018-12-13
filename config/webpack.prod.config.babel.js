@@ -6,6 +6,7 @@
 import path from 'path'
 import webpack from 'webpack'
 import UglifyJsPlugin  from 'uglifyjs-webpack-plugin'
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // 从基础设置继承
 import merge from 'webpack-merge'
 import baseConfig from './webpack.base.config.babel.js'
@@ -44,7 +45,8 @@ const config =  merge.smart(baseConfig, {
 		// Loader压缩
 		new webpack.LoaderOptionsPlugin({
 			minimize: true
-		})
+		}),
+        new BundleAnalyzerPlugin()
 	],
 })
 
